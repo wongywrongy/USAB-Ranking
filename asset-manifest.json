@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/wongywrongy/usabRanking/static/css/main.fcf61a85.css",
-    "main.js": "/wongywrongy/usabRanking/static/js/main.170e71be.js",
+    "main.css": "/wongywrongy/usabRanking/static/css/main.b14ed012.css",
+    "main.js": "/wongywrongy/usabRanking/static/js/main.66886b3c.js",
     "index.html": "/wongywrongy/usabRanking/index.html",
-    "main.fcf61a85.css.map": "/wongywrongy/usabRanking/static/css/main.fcf61a85.css.map",
-    "main.170e71be.js.map": "/wongywrongy/usabRanking/static/js/main.170e71be.js.map"
+    "main.b14ed012.css.map": "/wongywrongy/usabRanking/static/css/main.b14ed012.css.map",
+    "main.66886b3c.js.map": "/wongywrongy/usabRanking/static/js/main.66886b3c.js.map"
   },
   "entrypoints": [
-    "static/css/main.fcf61a85.css",
-    "static/js/main.170e71be.js"
+    "static/css/main.b14ed012.css",
+    "static/js/main.66886b3c.js"
   ]
 }
