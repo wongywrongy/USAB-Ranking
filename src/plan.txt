@@ -1,0 +1,30 @@
+Players
+PlayerID (Primary Key)
+FirstName
+LastName
+
+Events
+EventID (Primary Key)
+EventName
+TournamentType
+TournamentName
+
+Tournaments
+TournamentID (Primary Key)
+TournamentName
+TournamentType
+
+PlayerEventResults
+PlayerEventResultID (Primary Key)
+PlayerID (Foreign Key referencing Players)
+EventID (Foreign Key referencing Events)
+AgeCategory
+FinishingPosition
+FinishingPositionPoints
+
+PlayerPoints
+PlayerPointID (Primary Key)
+PlayerID (Foreign Key referencing Players)
+TotalPoints
+JuniorNationalPoints
+Rank
