@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding: 20px;
 }
 
 .App-header {
@@ -13,32 +14,7 @@
   color: white;
 }
 
-input[type="text"] {
-  width: 80%;
-  padding: 10px;
-  margin-top: 20px;
-  font-size: 16px;
-}
-
-.table-container {
-  max-height: 400px; /* Set the desired height */
-  overflow-y: auto; /* Enable vertical scrolling */
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #444;
-}
-
-tbody tr:hover {
-  background-color: #555;
+p {
+  max-width: 600px;
+  margin: 20px auto;
 }
