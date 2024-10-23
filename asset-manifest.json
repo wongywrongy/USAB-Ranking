@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/wongywrongy/usabRanking/static/css/main.fcf61a85.css",
+    "main.js": "/wongywrongy/usabRanking/static/js/main.170e71be.js",
+    "index.html": "/wongywrongy/usabRanking/index.html",
+    "main.fcf61a85.css.map": "/wongywrongy/usabRanking/static/css/main.fcf61a85.css.map",
+    "main.170e71be.js.map": "/wongywrongy/usabRanking/static/js/main.170e71be.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fcf61a85.css",
+    "static/js/main.170e71be.js"
+  ]
+}
