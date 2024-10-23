@@ -53,6 +53,7 @@ def print_player_data(player_id):
 
         # Define an order for sorting age categories
         age_order = {"U19": 0, "U17": 1, "U15": 2, "U13": 3, "U11": 4}
+        event_order = {"BS": 0, "BD": 1, "GS": 2, "GD": 3, "XD": 4}
 
         # Process and print results from both databases if any results are found
         if results1 or results2:
@@ -89,7 +90,8 @@ def print_player_data(player_id):
             if tournaments:
                 print("\nTournaments:")
                 for tournament, details in tournaments.items():
-                    print(f"{tournament}:")
+                    
+                    print(f"{tournament[len("Badminton USA Results "):]}:")
                     # Sort tournament events by age category using the predefined order
                     for detail in sorted(details, key=lambda x: age_order.get(x[0].split()[-1], 5)):
                         print(f"  {detail[0]}, Position: {detail[1]}, Points: {detail[2]}")
@@ -104,4 +106,4 @@ def print_player_data(player_id):
             conn2.close()
 
 # Example usage
-print_player_data(1022259)
+# print_player_data(2441)
