@@ -57,5 +57,5 @@ def export_to_json(db_path, table_name, output_dir='data'):
             conn.close()
 
 # Example usage
-export_to_json('allPlayerData.db', 'AllPlayerData', 'public/data')
-export_to_json('finalPlayerData.db', 'finalPlayerData', 'public/data')
+export_to_json('allPlayerData.db', 'AllPlayerData', 'python/data')
+export_to_json('finalPlayerData.db', 'finalPlayerData', 'python/data')
