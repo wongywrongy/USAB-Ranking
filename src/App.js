@@ -7,7 +7,7 @@ function App() {
 
   useEffect(() => {
     // Fetch data from JSON file located in the public directory
-    fetch('/data/final_player_data.json')
+    fetch('data/finalPlayerData_2024-10-23.json')
       .then((response) => response.json())
       .then((data) => setPlayers(data))
       .catch((error) => console.error('Error fetching data:', error));
