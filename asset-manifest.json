@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/wongywrongy/usabRanking/static/css/main.b14ed012.css",
-    "main.js": "/wongywrongy/usabRanking/static/js/main.66886b3c.js",
-    "index.html": "/wongywrongy/usabRanking/index.html",
-    "main.b14ed012.css.map": "/wongywrongy/usabRanking/static/css/main.b14ed012.css.map",
-    "main.66886b3c.js.map": "/wongywrongy/usabRanking/static/js/main.66886b3c.js.map"
+    "main.css": "/static/css/main.b14ed012.css",
+    "main.js": "/static/js/main.66886b3c.js",
+    "index.html": "/index.html",
+    "main.b14ed012.css.map": "/static/css/main.b14ed012.css.map",
+    "main.66886b3c.js.map": "/static/js/main.66886b3c.js.map"
   },
   "entrypoints": [
     "static/css/main.b14ed012.css",
