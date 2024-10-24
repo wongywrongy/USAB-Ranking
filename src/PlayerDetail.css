@@ -1,22 +1,46 @@
 /* PlayerDetail.css */
 
+body, html {
+    height: 100%;
+    overflow: auto; /* Allow scrolling on the detail page */
+}
+
+.player-detail-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
 .back-button {
-    background-color:#BF0A30; /* Red */
-    color:white;
-    border:none;
-    padding:.5rem;
-    border-radius:.3rem;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #BF0A30;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.event-entry, .tournament-entry {
+    margin-bottom: 20px;
+}
+
+.tournament-entry p:first-child,
+.event-entry p:first-child {
+    font-weight: bold; /* Bold the tournament and event names */
 }
 
 h1, h2 {
-    color: var(--link-blue);
+    text-align: center;
 }
 
-ul {
-    list-style-type:none;
-    padding-left:.5rem;
-}
-
-li {
-    margin-bottom:.5rem;
+p {
+    margin: 5px 0;
 }

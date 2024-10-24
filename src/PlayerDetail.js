@@ -1,60 +1,74 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import finalPlayerData from './data/finalPlayerData'; // Ensure this path is correct
 import allPlayerData from './data/allPlayerData'; // Ensure this path is correct
-import './global.css';
-import './PlayerDetail.css';
-
+import './PlayerDetail.css'; // Import specific styles for PlayerDetail
 
 function PlayerDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [playerDetails, setPlayerDetails] = useState([]);
 
-    const playerEvents = finalPlayerData.filter(p => p.PlayerID.toString() === id);
-    const player = playerEvents[0]; // Assuming at least one event exists for the player
-    const tournaments = allPlayerData.filter(p => p.PlayerID.toString() === id);
+    useEffect(() => {
+        // Filter player data based on PlayerID
+        const details = allPlayerData.filter(player => player.PlayerID.toString() === id);
+        setPlayerDetails(details);
+    }, [id]);
 
-    if (!player) {
-        return <div>Player not found</div>;
+    if (playerDetails.length === 0) {
+        return <p>No details available for this player.</p>;
     }
 
-    // Group tournaments by their name
-    const groupedTournaments = tournaments.reduce((acc, tournament) => {
-        const tournamentName = tournament["Tournament Name"];
-        if (!acc[tournamentName]) {
-            acc[tournamentName] = [];
+    const playerName = `${playerDetails[0].FirstName} ${playerDetails[0].LastName}`;
+
+    // Aggregate event data
+    const eventData = {};
+    playerDetails.forEach(entry => {
+        if (!eventData[entry["Event Name"]]) {
+            eventData[entry["Event Name"]] = {
+                totalPoints: 0,
+                juniorNationalPoints: 0,
+                rank: entry["Finishing Position"]
+            };
         }
-        acc[tournamentName].push(tournament);
+        eventData[entry["Event Name"]].totalPoints += entry["Finishing Position Points"];
+        if (entry["Tournament Type"] === "Junior National") {
+            eventData[entry["Event Name"]].juniorNationalPoints += entry["Finishing Position Points"];
+        }
+    });
+
+    // Group tournaments by tournament name
+    const tournaments = playerDetails.reduce((acc, entry) => {
+        if (!acc[entry["Tournament Name"]]) {
+            acc[entry["Tournament Name"]] = [];
+        }
+        acc[entry["Tournament Name"]].push(entry);
         return acc;
     }, {});
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <button onClick={() => navigate(-1)} className="back-button">Back</button>
-                <h1>Player: {player.FirstName}, {player.LastName}, {player["Event Name"].split(' ')[1]}</h1>
-
-                <h2>Events:</h2>
-                {playerEvents.map(event => (
-                    <div key={event["Event Name"]}>
-                        {event["Event Name"]}, Total Points: {event["Total Points"]}, Junior National Points: {event["Junior National Points"]}, Rank: {event.Rank}
+        <div className="player-detail-container">
+            <button onClick={() => navigate(-1)} className="back-button">Back</button>
+            <h1>{playerName}</h1>
+            <h2>Events:</h2>
+            <div className="events-grid">
+                {Object.entries(eventData).map(([eventName, data], index) => (
+                    <div key={index} className="event-entry">
+                        <p><strong>{eventName}</strong></p>
+                        <p>Total Points: {data.totalPoints}</p>
+                        <p>Junior National Points: {data.juniorNationalPoints}</p>
+                        <p>Rank: {data.rank}</p>
                     </div>
                 ))}
-
-                <h2>Tournaments:</h2>
-                {Object.entries(groupedTournaments).map(([tournamentName, events]) => (
-                    <div key={tournamentName}>
-                        {tournamentName}:
-                        <ul>
-                            {events.map(event => (
-                                <li key={event["Event Name"]}>
-                                    {event["Event Name"]}, Position: {event["Finishing Position"]}, Points: {event["Finishing Position Points"]}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </header>
+            </div>
+            <h2>Tournaments:</h2>
+            {Object.entries(tournaments).map(([tournamentName, entries], index) => (
+                <div key={index} className="tournament-entry">
+                    <p><strong>{tournamentName}</strong></p>
+                    {entries.map((entry, idx) => (
+                        <p key={idx}><strong>{entry["Event Name"]}</strong>, Position: {entry["Finishing Position"]}, Points: {entry["Finishing Position Points"]}</p>
+                    ))}
+                </div>
+            ))}
         </div>
     );
 }
