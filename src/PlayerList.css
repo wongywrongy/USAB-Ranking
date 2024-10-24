@@ -3,55 +3,77 @@
 .App-header {
     text-align: center;
     padding: 20px;
-  }
-  
-  .tab-container {
+}
+
+.tab-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Create a grid with 5 columns */
     gap: 10px; /* Space between buttons */
-    max-width: 600px; /* Optional: Limit the width of the tab container */
     margin: 20px auto; /* Center the tab container with space above and below */
-  }
-  
-  button {
+}
+
+/* Styles for desktop */
+@media (min-width: 768px) {
+    .tab-container {
+        grid-template-columns: repeat(5, 1fr); /* 5 columns for desktop */
+        max-width: 600px; /* Limit the width of the tab container */
+    }
+
+    .list-container {
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+}
+
+/* Styles for mobile */
+@media (max-width: 767px) {
+    .tab-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
+        max-width: 100%; /* Full width on mobile */
+    }
+
+    .list-container {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+button {
     font-size: 1.2rem;
     padding: 10px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
     background-color: #f0f0f0; /* Default button color */
-  }
-  
-  .active-tab, .active-subtab {
+}
+
+.active-tab, .active-subtab {
     background-color: #BF0A30; /* Active button color */
     color: white;
-  }
-  
-  .search-container {
+}
+
+.search-container {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
     align-items: center; /* Center elements horizontally */
-  }
-  
-  .search-bar {
+}
+
+.search-bar {
     width: calc(100% - 40px);
     max-width: 400px;
     padding: 10px;
-  }
-  
-  .last-updated {
+}
+
+.last-updated {
     font-size: 0.9rem;
-  }
-  
-  .list-container {
+}
+
+.list-container {
     max-height: calc(100vh - 250px);
     overflow-y: auto; /* Only this area should be scrollable */
-    padding-left: 30%;
-    padding-right: 30%;
     padding-top: 20px;
-  }
-  
-  .player-card {
+}
+
+.player-card {
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Align items to start for uniformity */
@@ -64,48 +86,48 @@
     max-width:500px;
     margin-left:auto;
     margin-right:auto;
-  }
+}
 
-  .player-card:hover {
+.player-card:hover {
     transform:translateY(-.625rem);
     box-shadow:.2rem .2rem .75rem rgba(0,0,0,.25);
-  }
-  
-  .rank-number {
-     font-size:1.4rem;
-     font-weight:bold;
-     color:#BF0A30;
-     padding:.2rem .5rem;
-     padding-left: 2rem;
-     border-radius:.3rem;
-     margin-right:.75rem;
-  }
-  
-  .card-content {
-     display:flex;
-     flex-direction:column;
-     align-items:flex-start; /* Align content to start for uniformity */
-     justify-content:center; /* Center content vertically */
-     text-align:left; /* Align text to the left within the card */
-     margin-left:1rem; /* Add space between rank and content */
-  }
-  
-  .card-content h3,
-  .card-content p {
-     margin:.25rem auto; /* Adjusted margin for better spacing */
-     text-decoration:none; /* Remove underline from all text */
-  }
-  
-  .player-id {
-     font-weight: normal; /* Ensure Player ID is not bolded */
-  }
-  
-  a {
-     text-decoration:none; /* Remove underline from links */
-     color: inherit; /* Inherit color from parent to avoid default link color */
-  }
-  
-  .suggestion-link {
-     color:#043482;
-     cursor:pointer;
-  }
+}
+
+.rank-number {
+   font-size:1.4rem;
+   font-weight:bold;
+   color:#BF0A30;
+   padding:.2rem .5rem;
+   padding-left: 2rem;
+   border-radius:.3rem;
+   margin-right:.75rem;
+}
+
+.card-content {
+   display:flex;
+   flex-direction:column;
+   align-items:flex-start; /* Align content to start for uniformity */
+   justify-content:center; /* Center content vertically */
+   text-align:left; /* Align text to the left within the card */
+   margin-left:1rem; /* Add space between rank and content */
+}
+
+.card-content h3,
+.card-content p {
+   margin:.25rem auto; /* Adjusted margin for better spacing */
+   text-decoration:none; /* Remove underline from all text */
+}
+
+.player-id {
+   font-weight: normal; /* Ensure Player ID is not bolded */
+}
+
+a {
+   text-decoration:none; /* Remove underline from links */
+   color: inherit; /* Inherit color from parent to avoid default link color */
+}
+
+.suggestion-link {
+   color:#043482;
+   cursor:pointer;
+}
