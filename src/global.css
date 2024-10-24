@@ -1,0 +1,17 @@
+/* global.css */
+
+:root {
+    --navy-blue: #ffffff; /* White for text on dark backgrounds */
+    --red: #BF0A30;
+    --white: #ffffff;
+    --light-gray: #e0ecee;
+    --dark-gray: #333333;
+    --link-blue: #002868;
+  }
+  
+  body {
+    background-color: var(--white);
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--dark-gray);
+  }

@@ -1,65 +1,29 @@
-.App {
-  text-align: center;
-  padding: 20px;
-}
+/* App.css */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: var(--navy-blue);
+  color: var(--dark-gray);
+  padding: 20px;
+  text-align: center;
 }
 
 .tabs, .subtabs {
-  margin: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 button {
-  margin: 5px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  margin-right: .5rem;
+  padding-left:.5rem;
+  padding-right:.5rem;
+  font-size:.9rem;
+  border-radius:.3rem;
+  border:none;
+  cursor:pointer;
 }
 
 .active-tab, .active-subtab {
-  background-color: #61dafb;
-}
-
-.search-bar {
-  width: 300px;
-  padding: 10px;
-  margin: 20px auto;
-}
-
-.list-container {
-  max-height: 70vh; /* Set the desired height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  width: 80%;
-}
-
-.player-card {
-  background-color: #3a3f47;
-  margin-bottom: 10px;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.player-card p {
-  margin: 5px 0;
-}
-
-.suggestion {
-  color: #ffcc00;
-  margin-top: 10px;
-}
-
-.suggestion-link {
-  color: #61dafb;
-  cursor: pointer;
-  text-decoration: underline;
+  background-color: var(--red);
+  color: var(--white);
 }
