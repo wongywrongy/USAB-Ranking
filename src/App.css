@@ -52,3 +52,14 @@ button {
 .player-card p {
   margin: 5px 0;
 }
+
+.suggestion {
+  color: #ffcc00;
+  margin-top: 10px;
+}
+
+.suggestion-link {
+  color: #61dafb;
+  cursor: pointer;
+  text-decoration: underline;
+}

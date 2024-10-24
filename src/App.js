@@ -9,22 +9,58 @@ function App() {
   const [selectedEvent, setSelectedEvent] = useState(eventTypes[0]);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState(ageGroups[0]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [suggestedTabs, setSuggestedTabs] = useState([]);
 
-  // Filter data based on selected event, age group, and search term
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const terms = searchTerm.toLowerCase().split(' ').filter(Boolean);
+
+  // Filter data based on selected event, age group, and search terms
   const filteredData = finalPlayerData
     .filter(player =>
       player["Event Name"].startsWith(selectedEvent) &&
       player["Event Name"].endsWith(selectedAgeGroup) &&
-      (player.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       player.LastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       player.PlayerID.toString().includes(searchTerm))
+      terms.every(t =>
+        player.FirstName.toLowerCase().includes(t) ||
+        player.LastName.toLowerCase().includes(t) ||
+        player.PlayerID.toString().includes(t)
+      )
     )
     .sort((a, b) => a.Rank - b.Rank); // Sort by rank in ascending order
+
+  // Suggest other tabs if no results
+  React.useEffect(() => {
+    if (filteredData.length === 0 && searchTerm) {
+      const suggestions = [];
+      for (let event of eventTypes) {
+        for (let age of ageGroups) {
+          if (event === selectedEvent && age === selectedAgeGroup) continue;
+          const alternativeData = finalPlayerData.filter(player =>
+            player["Event Name"].startsWith(event) &&
+            player["Event Name"].endsWith(age) &&
+            terms.every(t =>
+              player.FirstName.toLowerCase().includes(t) ||
+              player.LastName.toLowerCase().includes(t) ||
+              player.PlayerID.toString().includes(t)
+            )
+          );
+          if (alternativeData.length > 0) {
+            suggestions.push({ event, age });
+          }
+        }
+      }
+      setSuggestedTabs(suggestions);
+    } else {
+      setSuggestedTabs([]);
+    }
+  }, [filteredData, searchTerm, selectedEvent, selectedAgeGroup]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>USA Badminton Rankings</h1>
+        <h1>Final Player Rankings</h1>
         <div className="tabs">
           {eventTypes.map(event => (
             <button
@@ -51,9 +87,28 @@ function App() {
           type="text"
           placeholder="Search by name or PlayerID"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearch}
           className="search-bar"
         />
+        {suggestedTabs.length > 0 && (
+          <p className="suggestion">
+            try switching to:{" "}
+            {suggestedTabs.map(({ event, age }, index) => (
+              <span key={`${event}-${age}`}>
+                <span
+                  className="suggestion-link"
+                  onClick={() => {
+                    setSelectedEvent(event);
+                    setSelectedAgeGroup(age);
+                  }}
+                >
+                  {`${event} ${age}`}
+                </span>
+                {index < suggestedTabs.length - 1 ? ', ' : ''}
+              </span>
+            ))}
+          </p>
+        )}
         <div className="list-container">
           {filteredData.length > 0 ? (
             filteredData.map((player) => (
