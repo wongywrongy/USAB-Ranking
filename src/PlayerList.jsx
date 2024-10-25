@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import finalPlayerData from './data/finalPlayerData'; // Ensure this path is correct
-import allPlayerData from './data/allPlayerData'; // Ensure this path is correct
-import './PlayerList.css'; // Import specific styles for PlayerList
+import finalPlayerData from './data/finalPlayerData';
+import allPlayerData from './data/allPlayerData';
+import './PlayerList.css';
 
 function PlayerList() {
     const eventTypes = ['BD', 'BS', 'GS', 'GD', 'XD'];
@@ -11,38 +11,17 @@ function PlayerList() {
     const [selectedEvent, setSelectedEvent] = useState(eventTypes[0]);
     const [selectedAgeGroup, setSelectedAgeGroup] = useState(ageGroups[0]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [filteredData, setFilteredData] = useState([]);
-    const [suggestedTabs, setSuggestedTabs] = useState([]);
 
-    // Initialize filtered data based on selected tab
-    useEffect(() => {
-        updateFilteredData();
-    }, [selectedEvent, selectedAgeGroup]);
-
-    // Debounce function to delay search execution
-    const debounce = (func, delay) => {
-        let debounceTimer;
-        return function (...args) {
-            const context = this;
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => func.apply(context, args), delay);
-        };
-    };
-
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-        debounceSearch(event.target.value);
-    };
-
-    const debounceSearch = debounce((term) => {
-        if (term.length < 3) {
-            updateFilteredData(); // Reset to default list if search term is less than 3 characters
-            return;
+    const filteredData = useMemo(() => {
+        if (searchTerm.length < 3) {
+            return finalPlayerData.filter(player =>
+                player["Event Name"].startsWith(selectedEvent) &&
+                player["Event Name"].endsWith(selectedAgeGroup)
+            ).sort((a, b) => a.Rank - b.Rank);
         }
 
-        const terms = term.toLowerCase().split(' ').filter(Boolean);
+        const terms = searchTerm.toLowerCase().split(' ').filter(Boolean);
 
-        // Filter data based on search term across all categories by name or PlayerID
         const filtered = allPlayerData.filter(player =>
             terms.every(t =>
                 player.FirstName.toLowerCase().includes(t) ||
@@ -51,22 +30,26 @@ function PlayerList() {
             )
         );
 
-        // Remove duplicates based on PlayerID
-        const uniqueFiltered = Array.from(new Set(filtered.map(player => player.PlayerID)))
+        return Array.from(new Set(filtered.map(player => player.PlayerID)))
             .map(id => filtered.find(player => player.PlayerID === id));
+    }, [searchTerm, selectedEvent, selectedAgeGroup]);
 
-        setFilteredData(uniqueFiltered);
-    }, 300); // 300ms delay for debounce
+    const debounce = useCallback((func, delay) => {
+        let debounceTimer;
+        return function (...args) {
+            const context = this;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    }, []);
 
-    const updateFilteredData = () => {
-        // Filter data based on selected event and age group
-        const defaultFilteredData = finalPlayerData.filter(player =>
-            player["Event Name"].startsWith(selectedEvent) &&
-            player["Event Name"].endsWith(selectedAgeGroup)
-        ).sort((a, b) => a.Rank - b.Rank);
+    const debounceSearch = useMemo(() => debounce((term) => {
+        setSearchTerm(term);
+    }, 300), [debounce]);
 
-        setFilteredData(defaultFilteredData);
-    };
+    const handleSearchChange = useCallback((event) => {
+        debounceSearch(event.target.value);
+    }, [debounceSearch]);
 
     return (
         <div className="App">
@@ -96,7 +79,6 @@ function PlayerList() {
                     <input
                         type="text"
                         placeholder="Search by name or PlayerID"
-                        value={searchTerm}
                         onChange={handleSearchChange}
                         className="search-bar"
                     />
@@ -106,7 +88,7 @@ function PlayerList() {
                     {filteredData.length > 0 ? (
                         filteredData.map((player, index) => (
                             <Link to={`/player/${player.PlayerID}`} key={`${player.PlayerID}-${index}`} className="player-card">
-                                {!searchTerm && (
+                                {searchTerm.length < 3 ? (
                                     <>
                                         <div className="rank-number">{player.Rank}</div>
                                         <div className="card-content">
@@ -120,17 +102,13 @@ function PlayerList() {
                                             )}
                                         </div>
                                     </>
-                                )}
-                                {searchTerm && (
-                                    <>
-                                        {/* Display only names and PlayerID for search results */}
-                                        <div className="card-content">
-                                            <h3>
-                                                <strong>{player.FirstName} {player.LastName}</strong> 
-                                                <span className="player-id"> ({player.PlayerID})</span>
-                                            </h3>
-                                        </div>
-                                    </>
+                                ) : (
+                                    <div className="card-content">
+                                        <h3>
+                                            <strong>{player.FirstName} {player.LastName}</strong> 
+                                            <span className="player-id"> ({player.PlayerID})</span>
+                                        </h3>
+                                    </div>
                                 )}
                             </Link>
                         ))
@@ -143,4 +121,4 @@ function PlayerList() {
     );
 }
 
-export default PlayerList;
+export default React.memo(PlayerList);
