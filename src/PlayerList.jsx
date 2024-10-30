@@ -82,7 +82,7 @@ function PlayerList() {
                         onChange={handleSearchChange}
                         className="search-bar"
                     />
-                    <span className="last-updated">Last Updated 9/1/2024</span>
+                    <span className="last-updated">Last Updated 10/29/2024</span>
                 </div>
                 <div className="list-container">
                     {filteredData.length > 0 ? (
